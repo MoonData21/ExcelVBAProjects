@@ -1,0 +1,159 @@
+Unhide All Worksheets at One Go-
+
+Sub UnhideAllWoksheets()
+Dim ws As Worksheet
+For Each ws In ActiveWorkbook.Worksheets
+ws.Visible = xlSheetVisible
+Next ws
+End Sub
+
+Hide All Worksheets Except the Active Sheet
+
+Sub HideAllExceptActiveSheet()
+Dim ws As Worksheet
+For Each ws In ThisWorkbook.Worksheets
+If ws.Name <> ActiveSheet.Name Then ws.Visible = xlSheetHidden
+Next ws
+End Sub
+
+Sort Worksheets Alphabetically Using VBA
+
+Sub SortSheetsTabName()
+Application.ScreenUpdating = False
+Dim ShCount As Integer, i As Integer, j As Integer
+ShCount = Sheets.Count
+For i = 1 To ShCount - 1
+For j = i + 1 To ShCount
+If Sheets(j).Name < Sheets(i).Name Then
+Sheets(j).Move before:=Sheets(i)
+End If
+Next j
+Next i
+Application.ScreenUpdating = True
+End Sub
+
+Protect All Worksheets At One Go
+Sub ProtectAllSheets()
+Dim ws As Worksheet
+Dim password As String
+password = "Test123" 'replace Test123 with the password you want
+For Each ws In Worksheets
+   ws.Protect password:=password
+Next ws
+End Sub
+
+Unprotect All Worksheets At One Go
+Sub ProtectAllSheets()
+Dim ws As Worksheet
+Dim password As String
+password = "Test123" 'replace Test123 with the password you want
+For Each ws In Worksheets
+ws.Unprotect password:=password
+Next ws
+End Sub
+-- Note that the password needs to the same that has been used to lock the worksheets. 
+If it’s not, you will see an error.
+
+Unhide All Rows and Columns
+Sub UnhideRowsColumns()
+Columns.EntireColumn.Hidden = False
+Rows.EntireRow.Hidden = False
+End Sub
+
+Save Workbook With TimeStamp in Its Name
+Sub SaveWorkbookWithTimeStamp()
+Dim timestamp As String
+timestamp = Format(Date, "dd-mm-yyyy") & "_" & Format(Time, "hh-ss")
+ThisWorkbook.SaveAs "C:UsersUsernameDesktopWorkbookName" & timestamp
+End Sub
+
+Convert All Formulas into Values
+Sub ConvertToValues()
+With ActiveSheet.UsedRange
+.Value = .Value
+End With
+End Sub
+
+Protect/Lock Cells with Formulas
+Sub LockCellsWithFormulas()
+With ActiveSheet
+   .Unprotect
+   .Cells.Locked = False
+   .Cells.SpecialCells(xlCellTypeFormulas).Locked = True
+   .Protect AllowDeletingRows:=True
+End With
+End Sub
+
+Protect All Worksheets in the Workbook
+Sub ProtectAllSheets()
+Dim ws As Worksheet
+For Each ws In Worksheets
+ws.Protect
+Next ws
+End Sub
+
+Insert A Row After Every Other Row in the Selection
+Sub InsertAlternateRows()
+Dim rng As Range
+Dim CountRow As Integer
+Dim i As Integer
+Set rng = Selection
+CountRow = rng.EntireRow.Count
+For i = 1 To CountRow
+ActiveCell.EntireRow.Insert
+ActiveCell.Offset(2, 0).Select
+Next i
+End Sub
+
+Automatically Insert Date & Timestamp in the Adjacent Cell
+Private Sub Worksheet_Change(ByVal Target As Range)
+On Error GoTo Handler
+If Target.Column = 1 And Target.Value <> "" Then
+Application.EnableEvents = False
+Target.Offset(0, 1) = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+Application.EnableEvents = True
+End If
+Handler:
+End Sub
+
+Highlight Alternate Rows in the Selection
+Sub HighlightAlternateRows()
+Dim Myrange As Range
+Dim Myrow As Range
+Set Myrange = Selection
+For Each Myrow In Myrange.Rows
+   If Myrow.Row Mod 2 = 1 Then
+      Myrow.Interior.Color = vbCyan
+   End If
+Next Myrow
+End Sub
+
+Highlight Cells with Misspelled Words
+Sub HighlightMisspelledCells()
+Dim cl As Range
+For Each cl In ActiveSheet.UsedRange
+If Not Application.CheckSpelling(word:=cl.Text) Then
+cl.Interior.Color = vbRed
+End If
+Next cl
+End Sub
+
+Refresh All Pivot Tables in the Workbook
+
+Sub RefreshAllPivotTables()
+Dim PT As PivotTable
+For Each PT In ActiveSheet.PivotTables
+PT.RefreshTable
+Next PT
+End Sub
+
+Change the Letter Case of Selected Cells to Upper Case
+
+Sub ChangeCase()
+Dim Rng As Range
+For Each Rng In Selection.Cells
+If Rng.HasFormula = False Then
+Rng.Value = UCase(Rng.Value)
+End If
+Next Rng
+End Sub
