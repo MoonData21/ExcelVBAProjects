@@ -1,0 +1,60 @@
+1. Add Serial Numbers
+
+Sub AddSerialNumbers()
+Dim i As Integer
+On Error GoTo Last
+i = InputBox("Enter Value", "Enter Serial Numbers")
+For i = 1 To i
+ActiveCell.Value = i
+ActiveCell.Offset(1, 0).Activate
+Next i
+Last:Exit Sub
+End Sub
+
+2. Insert Multiple Columns
+
+Sub InsertMultipleColumns()
+Dim i As Integer
+Dim j As Integer
+ActiveCell.EntireColumn.Select
+On Error GoTo Last
+i = InputBox("Enter number of columns to insert", "Insert Columns")
+For j = 1 To i
+Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromRightorAbove
+Next j
+Last: Exit Sub
+End Sub
+
+3. Insert Multiple Rows
+
+Sub InsertMultipleRows()
+Dim i As Integer
+Dim j As Integer
+ActiveCell.EntireRow.Select
+On Error GoTo Last
+i = InputBox("Enter number of columns to insert", "Insert Columns")
+For j = 1 To i
+Selection.Insert Shift:=xlToDown, CopyOrigin:=xlFormatFromRightorAbove
+Next j
+Last: Exit Sub
+End Sub
+
+4. Auto Fit Columns
+
+Sub AutoFitColumns()
+Cells.Select
+Cells.EntireColumn.AutoFit
+End Sub
+
+5. Auto Fit Rows
+
+Sub AutoFitRows()
+Cells.Select
+Cells.EntireRow.AutoFit
+End Sub
+
+6. Remove Text Wrap
+
+Sub RemoveTextWrap()
+Range("A1").WrapText = False
+End Sub
