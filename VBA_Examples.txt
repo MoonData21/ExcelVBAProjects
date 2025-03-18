@@ -157,3 +157,71 @@ Rng.Value = UCase(Rng.Value)
 End If
 Next Rng
 End Sub
+
+Change the Letter Case of Selected Cells to Upper Case
+
+Sub ChangeCase()
+Dim Rng As Range
+For Each Rng In Selection.Cells
+If Rng.HasFormula = False Then
+Rng.Value = LCase(Rng.Value)
+End If
+Next Rng
+End Sub
+
+Highlight All Cells With Comments
+Sub HighlightCellsWithComments()
+ActiveSheet.Cells.SpecialCells(xlCellTypeComments).Interior.Color = vbBlue
+End Sub
+
+Highlight Blank Cells With VBA
+Sub HighlightBlankCells()
+Dim Dataset as Range
+Set Dataset = Selection
+Dataset.SpecialCells(xlCellTypeBlanks).Interior.Color = vbRed
+End Sub
+
+In this code, the blank cells have be highlighted in the red color. You can choose other colors such as blue, yellow, cyan, etc.
+
+How to Sort Data by Single Column
+
+Sub SortDataHeader()
+Range("DataRange").Sort Key1:=Range("A1"), Order1:=xlAscending, Header:=xlYes
+End Sub
+
+How to Sort Data by Multiple Columns
+
+Sub SortMultipleColumns()
+With ActiveSheet.Sort
+ .SortFields.Add Key:=Range("A1"), Order:=xlAscending
+ .SortFields.Add Key:=Range("B1"), Order:=xlAscending
+ .SetRange Range("A1:C13")
+ .Header = xlYes
+ .Apply
+End With
+End Sub
+
+How to Get Only the Numeric Part from a String in Excel
+
+'This VBA code will create a function to get the numeric part from a string':
+
+Function GetNumeric(CellRef As String)
+Dim StringLength As Integer
+StringLength = Len(CellRef)
+For i = 1 To StringLength
+If IsNumeric(Mid(CellRef, i, 1)) Then Result = Result & Mid(CellRef, i, 1)
+Next i
+GetNumeric = Result
+End Function
+
+'This VBA code will create a function to get the text part from a string'
+
+Function GetText(CellRef As String)
+Dim StringLength As Integer
+StringLength = Len(CellRef)
+For i = 1 To StringLength
+If Not (IsNumeric(Mid(CellRef, i, 1))) Then Result = Result & Mid(CellRef, i, 1)
+Next i
+GetText = Result
+End Function
+
